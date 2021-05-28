@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+{% load cart %}
+{% load custom_filter %}
+<head>
+   
+    <!--====== Required meta tags ======-->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!--====== Title ======-->
+    <title>products</title>
+    
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" href="{% static 'assets2/images/favicon.png' %}" type="image/png">
+
+    <!--====== Bootstrap css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/bootstrap.min.css' %}">
+    
+    <!--====== Animate css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/animate.css' %}">
+    
+    <!--====== Magnific Popup css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/magnific-popup.css' %}">
+    
+    <!--====== Slick css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/slick.css' %}">
+    
+    <!--====== Line Icons css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/LineIcons.css' %}">
+    
+    <!--====== Default css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/default.css' %}">
+    
+    <!--====== Style css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/style.css' %}">
+    
+    <!--====== Responsive css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/responsive.css' %}">
+  
+  
+</head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+	<div class="preloader">
+        <div class="spin">
+            <div class="cube1"></div>
+            <div class="cube2"></div>
+        </div>
+    </div>
+    <header class="header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg">
+                        <a class="navbar-brand" href="index.html">
+                            <!-- <img src="assets/images/logo.png" alt="Logo"> -->
+                        </a> <!-- Logo -->
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="bar-icon"></span>
+                            <span class="bar-icon"></span>
+                            <span class="bar-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul id="nav" class="navbar-nav ml-auto">
+
+                                <li class="nav-item">
+                                    <a data-scroll-nav="0" href="#product">Products</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a data-scroll-nav="0" href="{% url 'cart' %}">cart</a>
+                                </li>
+                                 <li class="nav-item">
+                                    <a data-scroll-nav="0" href="{% url 'order' %}">orders</a>
+                                </li>
+
+                            </ul> <!-- navbar nav -->
+                        </div>
+                    </nav> <!-- navbar -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </header>
+    <div class="container">
+   <div class="border rounded p-4 m-4">
+        <p >Your Cart</p>
+        <hr>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Sno.</th>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            	 {% for product in products %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td><img style="height: 80px;" class="rounded-circle" src="{{product.image.url}}" alt=""></td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.price|currency}}</td>
+                    <td>{{product|cart_quantity:request.session.cart}}</td>
+                    <td>{{product|price_total:request.session.cart|currency}}</td>
+                </tr>
+
+                {% endfor %}
+               
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <th colspan="4"></th>
+                    <th class="" colspan="">Total</th>
+                    <th>{{products|total_cart_price:request.session.cart|currency}}</th>
+
+                   
+                </tr>
+            </tfoot>
+        </table>
+        
+       <div>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+              Check Out Form
+          </h5>
+          <hr>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="m-2 p-3">
+           	 <form action="http://127.0.0.1:8000/products/checkout/" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="">Address</label>
+                  <input type="text" name="address" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                  
+                </div>
+                <div class="form-group">
+                    <label for="">Phone</label>
+                    <input type="text" name="phone" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                  </div>
+
+                  <input type="submit" value="Check out">
+            </form>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+    <script src="{% static 'assets2/js/vendor/modernizr-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets2/js/vendor/jquery-1.12.4.min.js' %}"></script>
+
+    <!--====== Bootstrap js ======-->
+    <script src="{% static 'assets2/js/bootstrap.min.js' %}"></script>
+    
+    
+    <!--====== Slick js ======-->
+    <script src="{% static 'assets2/js/slick.min.js' %}"></script>
+    
+    <!--====== Magnific Popup js ======-->
+    <script src="{% static 'assets2/js/jquery.magnific-popup.min.js' %}"></script>
+
+    
+    <!--====== nav js ======-->
+    <script src="{% static 'assets2/js/jquery.nav.js' %}"></script>
+    
+    <!--====== Nice Number js ======-->
+    <script src="{% static 'assets2/js/jquery.nice-number.min.js' %}"></script>
+    
+    <!--====== Main js ======-->
+    <script src="{% static 'assets2/js/main.js' %}"></script>
+
+</body>
+
+</html>

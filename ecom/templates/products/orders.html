@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+{% load cart %}
+{% load custom_filter %}
+<head>
+   
+    <!--====== Required meta tags ======-->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!--====== Title ======-->
+    <title>products</title>
+    
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" href="{% static 'assets2/images/favicon.png' %}" type="image/png">
+
+    <!--====== Bootstrap css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/bootstrap.min.css' %}">
+    
+    <!--====== Animate css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/animate.css' %}">
+    
+    <!--====== Magnific Popup css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/magnific-popup.css' %}">
+    
+    <!--====== Slick css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/slick.css' %}">
+    
+    <!--====== Line Icons css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/LineIcons.css' %}">
+    
+    <!--====== Default css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/default.css' %}">
+    
+    <!--====== Style css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/style.css' %}">
+    
+    <!--====== Responsive css ======-->
+    <link rel="stylesheet" href="{% static 'assets2/css/responsive.css' %}">
+  
+  
+
+</head>
+<body>
+	
+
+
+
+<div class="container">
+   <div class="border rounded p-4 m-4">
+        <p class="display-4 pl-4 ml-4">Your Orders</p>
+        <hr>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Sno.</th>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Date</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for order in orders %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td><img style="height: 80px;" class="rounded-circle" src="{{order.product.image.url}}" alt=""></td>
+                    <td>{{order.product.name}}</td>
+                    <td>{{order.date}}</td>
+                    <td>{{order.price|currency}}</td>
+                    <td>{{order.quantity}}</td>
+                    <td>{{order.quantity|multiply:order.price|currency}}</td>
+                    {% if order.status %}
+                    <td><small class="badge badge-success">Completed</small></td>
+                    {%else%}
+                    <td><small class="badge badge-warning">Pending</small></td>
+                    {% endif %}
+                </tr>
+
+                {% endfor %}
+               
+            </tbody>
+
+        </table>
+       
+   </div>
+</div>
+
+
+
+
+
+</body>
+
+</html>
